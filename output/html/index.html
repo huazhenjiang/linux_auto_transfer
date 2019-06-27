@@ -1,0 +1,1083 @@
+<html lang="en">
+<head>
+  <title>IPCam Device Test</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link type="text/css" href="css/bootstrap.min.css" rel="stylesheet" />
+  <link type="text/css" href="css/switch.css" rel="stylesheet" />
+  <link type="text/css" href="css/bootstrap-slider.min.css" rel="stylesheet" />
+  <link type="text/css" href="css/jquery.bootstrap-touchspin.css" rel="stylesheet"  media="all">
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/bootstrap-slider.min.js"></script>
+  <script src="js/jquery.bootstrap-touchspin.js"></script>
+  <style>
+
+  </style>
+
+</head>
+<body>
+
+<div class="container text-center">
+  <div class="row">
+    <div class="col-sm-10">
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-default text-left">
+            <div class="panel-body">
+              <center><H3>IPCam Device Test</H3></center><br>
+              <center>version:<span id="fw_ver"></span></center>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Start of Image Row -->
+<div class="row">
+  <div class="col-sm-12">
+    <div class="well">
+     <img id="video" src="/pt/video/snapshot"  height="50%" width="50%">
+    </div>
+  </div>
+</div>
+<!-- End of Image Row -->
+
+<!-- Start of Tabs Row -->
+<div class="row">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#information" role="tab" data-toggle="tab">Information</a></li>
+    <li><a href="#rtc" role="tab" data-toggle="tab">RTC</a></li>
+    <li><a href="#LED" role="tab" data-toggle="tab">LED</a></li>
+    <li><a href="#ICR" role="tab" data-toggle="tab">IR-Cut</a></li>
+    <li><a href="#IRLED" role="tab" data-toggle="tab">IR LED</a></li>
+    <li><a href="#ALS" role="tab" data-toggle="tab">Light Sensor</a></li>
+    <li><a href="#AUDIO" role="tab" data-toggle="tab">Audio</a></li>
+    <li><a href="#SD" role="tab" data-toggle="tab">SD Card</a></li>
+    <li><a href="#MOTOR" role="tab" data-toggle="tab">Focus/Zoom</a></li>
+    <li><a href="#ADMIN" role="tab" data-toggle="tab">Admin</a></li>
+    <li><a href="#NETWORK" role="tab" data-toggle="tab">Network</a></li>
+    <li><a href="#SNAPSHOT" role="tab" data-toggle="tab">Snapshot</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <!-- Start of Information -->
+    <div class="tab-pane active" id="information">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="well">
+                <div class="row">
+                    <div class="input-group">
+                      <span class="input-group-addon">RTSP URL</span>
+                      <input id="rtsp_url_1" type="text" class="form-control" name="rtsp_url_1" readonly="readonly" >
+                      <input id="rtsp_url_2" type="text" class="form-control" name="rtsp_url_2" readonly="readonly" >
+                      <input id="rtsp_url_3" type="text" class="form-control" name="rtsp_url_3" readonly="readonly" >
+                    </div>
+                </div>
+                <BR>
+                <div class="row">
+                    <div class="input-group">
+                      <span class="input-group-addon">MAC</span>
+                      <input id="mac_address" type="text" class="form-control" name="mac_address" placeholder="MAC Address">
+                      <div class="input-group-btn">
+                        <button class="btn btn-info" type="submit" id="btn_change_mac">Change</button>
+                      </div>
+                    </div>
+                </div>
+                <BR>
+                <div class="row">
+                    <div class="input-group">
+                      <span class="input-group-addon">IV(intelligence) license key</span>
+                      <input id="iv_key" type="text" class="form-control" name="iv_key" placeholder="license key">
+                      <div class="input-group-btn">
+                        <button class="btn btn-info" type="submit" id="btn_change_iv_key">Change</button>
+                      </div>
+                    </div>
+                </div>
+                <BR>
+                <div class="row">
+                    <div class="input-group">
+                      <span class="input-group-addon">FR(face recognition) license key</span>
+                      <input id="fr_key" type="text" class="form-control" name="fr_key" placeholder="license key">
+                      <div class="input-group-btn">
+                        <button class="btn btn-info" type="submit" id="btn_change_fr_key">Change</button>
+                      </div>
+                    </div>
+                </div>
+                <BR>
+                  <div class="row">
+                      <div class="input-group">
+                        <span class="input-group-addon">LPR license key</span>
+                        <input id="lpr_key" type="text" class="form-control" name="lpr_key" placeholder="license key">
+                        <div class="input-group-btn">
+                          <button class="btn btn-info" type="submit" id="btn_change_lpr_key">Change</button>
+                        </div>
+                      </div>
+                  </div>
+                  <BR>
+                <div class="row">
+                    <div class="input-group">
+                      <span class="input-group-addon">Model Name</span>
+                      <input id="hw_id" type="text" class="form-control" name="hw_id" placeholder="Model Name">
+                      <div class="input-group-btn">
+                        <button class="btn btn-info" type="submit" id="btn_change_hw_id">Change</button>
+                      </div>
+                    </div>
+                </div>
+           </div>
+         </div>
+      </div>
+    </div>
+    <!-- End of Information -->
+
+
+
+    <!-- Start of RTC -->
+    <div class="tab-pane" id="rtc">
+      <div class="col-sm-12">
+          <div class="well">
+                <div class="row">
+                  <div class="col-sm-4"><center>PC Time</center></div>
+                  <div class="col-sm-8">
+                    <div id='pctime'></div>
+                  </div>
+                </div>
+          </div>
+
+          <div class="well">
+                <div class="row">
+                  <div class="col-sm-4"><center>RTC Time</center></div>
+                  <div class="col-sm-8"><div id='rtctime'></div></div>
+                </div>
+          </div>
+          <div class="well">
+                <div class="row">
+                  <div class="col-sm-2"><center>Set RTC</center></div>
+                  <div class="col-sm-2"><input id="rtc_year" type="text" value="" name="rtc_year"></div>
+                  <div class="col-sm-2"><input id="rtc_month" type="text" value="" name="rtc_month"></div>
+                  <div class="col-sm-2"><input id="rtc_day" type="text" value="" name="rtc_day"></div>
+                </div>
+                <div class="row"></div>
+                <div class="row">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-2"><input id="rtc_hour" type="text" value="" name="rtc_hour"></div>
+                  <div class="col-sm-2"><input id="rtc_min" type="text" value="" name="rtc_min"></div>
+                  <div class="col-sm-2"><input id="rtc_sec" type="text" value="" name="rtc_sec"></div>
+                  <div class="col-sm-2"><button type="button" class="btn btn-primary" id="btn_setrtc">SET RTC</button></div>
+                </div>
+          </div>
+      </div>
+    </div>
+    <!-- End of RTC -->
+
+    <!-- Start of LED Row -->
+    <div class="tab-pane" id="LED">
+      <div class="col-sm-12">
+
+        <div class="well">
+              <div class="row">
+                <div class="col-sm-4"><center>Green Led</center></div>
+                <div class="col-sm-4"><center>Red Led</center></div>
+              </div>
+
+              <div class="row">
+
+                  <div class="col-sm-4">
+                    <center>
+                    <div class="onoffswitch">
+                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="green-led" checked>
+                      <label class="onoffswitch-label" for="green-led">
+                          <span class="onoffswitch-inner"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                  </center>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <center>
+                    <div class="onoffswitch">
+                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="red-led" checked>
+                      <label class="onoffswitch-label" for="red-led">
+                          <span class="onoffswitch-inner"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                    </center>
+                  </div>
+
+              </div>
+          </div>
+        </div>
+    </div>
+    <!-- End of LED Row -->
+
+    <!-- Start of ICR -->
+    <div class="tab-pane" id="ICR">
+      <div class="col-sm-12">
+        <div class="well">
+              <div class="row">
+                <div class="col-sm-4"><center>IR Cut</center></div>
+                <div class="col-sm-4"><center></center></div>
+                <div class="col-sm-4"><center></center></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <center>
+                    <div class="onoffswitch" id="ctrl-icr">
+                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="ir-cut" checked>
+                      <label class="onoffswitch-label" for="ir-cut">
+                          <span class="onoffswitch-inner"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                    <div class="row" id="disable-icr">
+                      <div class="col-sm-12 alert alert-info">
+                        Please disable D&N mode to control IR-CUT.
+                      </div>
+                    </div>
+                  </center>
+                </div>
+                <div class="col-sm-4"><center></center></div>
+                <div class="col-sm-4"><center></center></div>
+              </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of ICR -->
+
+    <!-- Start of IR LED -->
+    <div class="tab-pane" id="IRLED">
+      <div class="col-sm-12">
+        <div class="well">
+              <div class="row" id="ctrl-irled">
+                <div class="col-sm-12 alert alert-info">
+                  <input id="ir-led" type="text" style="width:100%;" />
+                </div>
+              </div>
+              <div class="row" id="disable-irled">
+                <div class="col-sm-12 alert alert-info">
+                  Please disable D&N mode to control IR-LED.
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of IR LED -->
+
+<!-- Start of ALS-->
+    <div class="tab-pane" id="ALS">
+      <div class="col-sm-12">
+        <div class="well">
+              <div class="row">
+                <div class="col-sm-12"></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 alert-info "> <!-- <input id="als" type="text"  style="width:100%"> -->
+                  <div id='websock_text_field'>No websocket connection yet</div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+<!-- End of ALS -->
+
+
+<!-- Start of AUDIO-->
+    <div class="tab-pane" id="AUDIO">
+      <div class="col-sm-12">
+
+        <div class="well">
+              <div class="row">
+                <div class="col-sm-4"><center>Audio</center></div>
+              </div>
+
+              <div class="row">
+                  <div class="col-sm-4">
+                    <center>
+                    <div class="onoffswitch">
+                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="audio" checked>
+                      <label class="onoffswitch-label" for="audio">
+                          <span class="onoffswitch-inner"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                    </center>
+                  </div>
+                  <div class="col-sm-4"><center><a href="test.wav">Download Audio File</a></center></div>
+              </div>
+          </div>
+
+          <div class="well">
+                <div class="row">
+                  <div class="col-sm-4"><center>Speaker Volume</center></div>
+                  <div class="col-sm-8">  <input id="speaker_volume" type="text" /></div>
+                </div>
+
+          </div>
+
+        <div class="well">
+          <div class="row">
+            <div class="col-sm-4"><center>Mic Volume</center></div>
+            <div class="col-sm-8">  <input id="mic_volume" type="text" /></div>
+          </div>
+        </div>
+
+        </div>
+    </div>
+<!-- End of AUDIO -->
+
+<!-- Start of SD-->
+    <div class="tab-pane" id="SD">
+      <div class="col-sm-12">
+
+        <div class="well">
+              <div class="row">
+                <div class="col-sm-4"><center>Single Test</center></div>
+                <div class="col-sm-4"><center>Continue Test</center></div>
+              </div>
+
+              <div class="row">
+
+                  <div class="col-sm-4">
+                    <center>
+                    <div class="onoffswitch">
+                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="sd" checked>
+                      <label class="onoffswitch-label" for="sd">
+                          <span class="onoffswitch-inner"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                  </center>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <center>
+                    <div class="onoffswitch">
+                      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="sd-loop" checked>
+                      <label class="onoffswitch-label" for="sd-loop">
+                          <span class="onoffswitch-inner"></span>
+                          <span class="onoffswitch-switch"></span>
+                      </label>
+                    </div>
+                  </center>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+    </div>
+<!-- End of SD -->
+
+<!-- Start of Motor -->
+    <div class="tab-pane" id="MOTOR">
+      <!-- Start of Zoom  -->
+      <div class="row">
+          <div class="col-sm-3">
+            <div class="well">
+             <p>Zoom</p>
+            </div>
+          </div>
+
+          <input id="zoom-bar" data-slider-id='zoom-barSlider' type="text" style="width:70%;" data-slider-min="45" data-slider-max="1364" data-slider-step="1" data-slider-value="45"/>         
+      </div>
+  <!-- End of Zoom -->      
+      <!-- Start of Focus  -->
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="well">
+            <p>Focus</p>
+          </div>
+        </div>
+
+        <input id="focus-bar" data-slider-id='focus-barSlider' type="text" style="width:70%;" data-slider-min="45" data-slider-max="2888" data-slider-step="1" data-slider-value="45"/>
+        <button type="button" class="btn btn-danger" id="btn_one_push">one push</button>       
+      </div>
+      <!-- End of Focus -->
+    </div>
+<!-- End of Motor -->
+<!-- Start of ADMIN -->
+    <div class="tab-pane" id="ADMIN">
+      <!-- Start of Firmware UPgrade  -->
+            <div class="row">
+
+              <div class="col-sm-3">
+                <div class="well">
+                 <p>MFG Firmware Upgrade</p>
+                </div>
+              </div>
+
+              <div class="col-sm-9">
+                <div class="well">
+                      <div class="row">
+                        <div class="col-sm-4 ">
+
+                          <form id="myform">
+                            <input type="file" id="fileSelect"/>
+                            <button type="button" onclick="doSubmit()">Submit</button>
+                          </form>
+
+                        </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <!-- End of Firmware UPgrade -->
+      <!-- Start of Firmware UPgrade  -->
+            <div class="row">
+
+              <div class="col-sm-3">
+                <div class="well">
+                 <p>NSC Firmware Upgrade</p>
+                </div>
+              </div>
+
+              <div class="col-sm-9">
+                <div class="well">
+                      <div class="row">
+                        <div class="col-sm-4 ">
+
+                          <form id="myform">
+                            <input type="file" id="nsc_fileSelect"/>
+                            <button type="button" onclick="doNSCSubmit()">Submit</button>
+                          </form>
+
+                        </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <!-- End of Firmware UPgrade -->
+      <!-- Start of reboot   -->
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="well">
+                 <p>Reboot</p>
+                </div>
+              </div>
+              <div class="col-sm-9">
+                <div class="well">
+                    <button type="button" class="btn btn-danger" id="btn_reboot">Reboot</button>
+                </div>
+              </div>
+            </div>
+      <!-- End of reboot -->
+      <!-- Start of change partition   -->
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="well">
+                 <p>Change Boot Partition</p>
+                </div>
+              </div>
+              <div class="col-sm-9">
+                <div class="well">
+                    <button type="button" class="btn btn-danger" id="btn_chg_boot">Change</button>
+                </div>
+              </div>
+            </div>
+      <!-- End of change partition -->
+      <!-- Start of factory reset   -->
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="well">
+                 <p>factory reset</p>
+                </div>
+              </div>
+              <div class="col-sm-9">
+                <div class="well">
+                    <button type="button" class="btn btn-danger" id="btn_factory_reset">Reset</button>
+                </div>
+              </div>
+            </div>
+      <!-- End of change partition -->
+    </div>
+<!-- End of ADMIN -->
+
+<!-- Start of NETWORK -->
+    <div class="tab-pane" id="NETWORK">
+      <div class="row">
+        <div class="col-sm-12">
+          <label class="radio-inline"><input type="radio" name="net_type" checked value="static">Static IP</label>
+          <label class="radio-inline"><input type="radio" name="net_type" value="dhcp">DHCP</label>
+        </div>
+      </div>
+      <div class="row" id="set_ip_info">
+          <div class="input-group">
+            <span class="input-group-addon">Static IP</span>
+            <input id="ip_address" type="text" class="form-control" name="ip" placeholder="IP Address">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">Mask   </span>
+            <input id="submask" type="text" class="form-control" name="mask" placeholder="Mask">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon">Gateway</span>
+            <input id="gateway" type="text" class="form-control" name="gateway" placeholder="Gateway">
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <br>
+          <button type="button" class="btn btn-danger" id="btn_setip">Submit</button>
+        </div>
+      </div>
+    </div>
+<!-- End of NETWORK -->
+
+<!-- Start of SNAPSHOT -->
+    <div class="tab-pane" id="SNAPSHOT">
+      <div class="col-sm-12">
+          <br>
+          <div class="input-group">
+            <label class="checkbox-inline"><input type="checkbox" name="dn_mode" id="dn_mode" value="1">Enable D&N Mode</label>
+          </div>
+          <br>
+          <div class="input-group">
+            <label class="checkbox-inline"><input type="checkbox" name="snapshot_boot" id="snapshot_boot" value="1">Snapshot after Boot</label>
+          </div>
+          <br>
+          <div class="input-group">
+            <span class="input-group-addon">FTP IP</span>
+            <input id="ftp_ip" type="text" class="form-control" name="ftp_ip" placeholder="IP Address">
+          </div>
+           <div class="input-group">
+            <span class="input-group-addon">Snapshot Interval</span>
+            <input id="sanp_interval" type="text" class="form-control" name="sanp_interval" placeholder="sec">
+          </div>
+       <div class="row">
+        <div class="col-sm-12">
+          <br>
+          <button type="button" class="btn btn-danger" id="btn_setsnap">Submit</button>
+          <button type="button" class="btn btn-danger" id="btn_ftptest">FTP Test</button>
+        </div>
+      </div>
+      </div>
+
+
+    </div>
+<!-- End of SNAPSHOT -->
+
+</div> <!-- End of Tabs Row -->
+  </div>
+</div>
+<!-- core JavaScript
+    ================================================== -->
+<script type='text/javascript'>
+
+function doNSCSubmit(){
+  // Form Data
+  var formData = new FormData();
+
+  var fileSelect = document.getElementById("nsc_fileSelect");
+  if(fileSelect.files && fileSelect.files.length == 1){
+   var file = fileSelect.files[0]
+   formData.set("file", file , file.name);
+  }
+
+  // Http Request
+  var request = new XMLHttpRequest();
+   request.onreadystatechange = function()
+  {
+  if (request.readyState==4 && request.status==200)
+    {
+      var obj = JSON.parse(request.responseText);
+      if(obj.upgrade == "finished"){
+        alert("upgrade finished!");
+      }
+    }
+  }
+  request.open('POST', "/firmware_update_full");
+  request.send(formData);
+
+}
+
+function doSubmit(){
+  // Form Data
+  var formData = new FormData();
+
+  var fileSelect = document.getElementById("fileSelect");
+  if(fileSelect.files && fileSelect.files.length == 1){
+   var file = fileSelect.files[0]
+   formData.set("file", file , file.name);
+  }
+
+  // Http Request
+  var request = new XMLHttpRequest();
+   request.onreadystatechange = function()
+  {
+  if (request.readyState==4 && request.status==200)
+    {
+      var obj = JSON.parse(request.responseText);
+      if(obj.upgrade == "finished"){
+        alert("upgrade finished!");
+      }
+    }
+  }
+  request.open('POST', "/firmware_update");
+  request.send(formData);
+}
+
+function re_load_image()
+{
+  d = new Date();
+  $("#video").attr("src", "/pt/video/snapshot?"+d.getTime());
+  setTimeout("re_load_image()",5000);
+}
+function clone_time()
+{
+
+  today = new Date();
+  $("#pctime").empty();
+  $("#pctime").append(today.getFullYear()+"/"+(today.getMonth()+1)+"/"+today.getDate()+" "+today.getHours()+":"+today.getMinutes()+":"+today.getSeconds());
+  setTimeout("clone_time()",700);
+}
+
+function network_config()
+{
+
+  $.post("/pt/network/get",function(data,status){
+    $('input[name="net_type"]')[0].checked = true
+    if(data.ip=="0.0.0.0"){
+      //$('input[name=net_type]').attr("checked",'dhcp');
+        $('input[name="net_type"]')[1].checked = true;
+          $("#set_ip_info").hide();
+    }else{
+      //$('input[name=net_type]').attr("checked",'static');
+        $('input[name="net_type"]')[0].checked = true;
+          $("#set_ip_info").show();
+        $("#ip_address").val(data.ip);
+        $("#submask").val(data.mask);
+        $("#gateway").val(data.gw);
+    }
+  });
+}
+
+function ftp_snapshot()
+{
+  $.post("/pt/ftp/snapshot/get",function(data,status){
+      var sanp_interval=data.snap_interval;
+      $("#ftp_ip").val(data.ftp_ip);
+      $("#sanp_interval").val(data.snap_interval);
+
+      if(data.snap_boot=="1"){
+         $('#snapshot_boot').prop('checked', true);
+      }
+
+      if(sanp_interval>0){
+        $('#dn_mode').prop('checked', true);
+      }
+
+  });
+}
+function show_info()
+{
+    $("#mac_address").empty();
+    $.post("/pt/info/get/mac",function(data,status){
+      $("#mac_address").val(data.mac);
+    });
+
+    $("#iv_key").empty();
+    $.post("/pt/info/get/iv_key",function(data,status){
+      $("#iv_key").val(data.iv_key);
+    });
+
+    $("#fr_key").empty();
+    $.post("/pt/info/get/fr_key",function(data,status){
+      $("#fr_key").val(data.fr_key);
+    });
+
+    $("#lpr_key").empty();
+    $.post("/pt/info/get/lpr_key",function(data,status){
+      $("#lpr_key").val(data.lpr_key);
+    });
+
+    $("#hw_id").empty();
+    $.post("/pt/info/get/hw_id",function(data,status){
+      $("#hw_id").val(data.hw_id);
+    });
+
+      $("#rtsp_url_1").val("rtsp://"+location.hostname+"/stream1");
+      $("#rtsp_url_2").val("rtsp://"+location.hostname+"/stream2");
+      $("#rtsp_url_3").val("rtsp://"+location.hostname+"/stream3");
+}
+
+function get_dn_mode()
+{
+  $.post("/pt/image/dn/enable",function(data,status){
+    if(data.enable == "1"){
+      $("#ctrl-irled").hide();
+      $("#disable-irled").show();
+
+      $("#ctrl-icr").hide();
+      $("#disable-icr").show();
+    }else{
+      $("#ctrl-irled").show();
+      $("#disable-irled").hide();
+
+      $("#ctrl-icr").show();
+      $("#disable-icr").hide();
+    }
+    setTimeout("get_dn_mode()",1000);
+  });
+
+}
+function get_rtc_time()
+{
+  $.post("/pt/rtc/get",function(data,status){
+      $("#rtctime").empty();
+    $("#rtctime").append(data.rtc_time);
+    setTimeout("get_rtc_time()",700);
+  });
+}
+
+function init_rtc_ui()
+{
+      $("input[name='rtc_year']").TouchSpin({
+          min: 1970,max: 2035,step: 1,decimals: 0,initval: 2019,verticalbuttons: true
+      });
+
+      $("input[name='rtc_month']").TouchSpin({
+          min: 1,max: 12,step: 1,decimals: 0,initval: 3,verticalbuttons: true
+      });
+      $("input[name='rtc_day']").TouchSpin({
+          min: 1,max: 31,step: 1,decimals: 0,initval: 11,verticalbuttons: true
+      });
+
+      $("input[name='rtc_hour']").TouchSpin({
+          min: 0,max: 23,step: 1,decimals: 0,initval: 12,verticalbuttons: true
+      });
+      $("input[name='rtc_min']").TouchSpin({
+          min: 0,max: 59,step: 1,decimals: 0,initval: 00,verticalbuttons: true
+      });
+      $("input[name='rtc_sec']").TouchSpin({
+          min: 0,max: 59,step: 1,decimals: 0,initval: 00,verticalbuttons: true
+      });
+}
+function load() {
+  var wsproto = (location.protocol === 'https:') ? 'wss:' : 'ws:';
+  connection = new WebSocket(wsproto + '//' + window.location.host + '/websocket');
+  websock_text_field = document.getElementById('websock_text_field');
+  connection.onmessage = function (e) {
+    websock_text_field.innerHTML=e.data;
+  }
+  connection.onerror = function (error) {
+    alert('WebSocket error');
+    connection.close();
+  }
+}
+
+
+  var irled=$("#ir-led").slider({min: 0,max: 255,value: 0,tooltip_position:'bottom'});
+
+  var speaker_volume=$("#speaker_volume").slider({min: 0,max: 100,value: 0,tooltip_position:'bottom'});
+  var mic_volume=$("#mic_volume").slider({min: 0,max: 100,value: 0,tooltip_position:'bottom'});
+
+  var zoombar=$("#zoom-bar").slider({min: 45,max: 1364,value: 45,tooltip_position:'bottom'});
+  var focusbar=$("#focus-bar").slider({min: 45,max: 2888,value: 45,tooltip_position:'bottom'});
+
+  $("#als").slider({ min: 0, max: 10, value: [0, 10], focus: true });
+
+
+  $('#audio').prop('checked', false);
+  $('#sd').prop('checked', false);
+  $('#sd-loop').prop('checked', false);
+  $.post("/pt/version",function(data,status){
+    $("#fw_ver").text(data.version);
+  });
+  $.post("/pt/irled/0",function(data,status){});
+  $('#ir-cut').prop('checked', false);
+  $.post("/pt/ircut/off",function(data,status){});
+
+  $( document ).ready(function() {
+
+    //init hw
+    $.post("/pt/led/green/on",function(data,status){});
+    //$.post("/pt/led/red/on",function(data,status){});
+    load();
+    clone_time();
+    get_rtc_time();
+    init_rtc_ui();
+    show_info();
+    re_load_image();
+    network_config();
+    ftp_snapshot();
+    get_dn_mode();
+
+    $("#green-led").click(function() {
+       if($("#green-led").prop("checked")) {
+          $.post("/pt/led/green/on",function(data,status){});
+       } else {
+          $.post("/pt/led/green/off",function(data,status){});
+       }
+    });
+
+    $("#red-led").click(function() {
+       if($("#red-led").prop("checked")) {
+          $.post("/pt/led/red/on",function(data,status){});
+       } else {
+          $.post("/pt/led/red/off",function(data,status){});
+       }
+    });
+
+    $("#ir-cut").click(function() {
+       if($("#ir-cut").prop("checked")) {
+          $.post("/pt/ircut/on",function(data,status){});
+       } else {
+          $.post("/pt/ircut/off",function(data,status){});
+       }
+    });
+
+    $("#ir-led").change(function() {
+        $.post("/pt/irled/"+irled.slider('getValue'),function(data,status){});
+    });
+
+    $("#speaker_volume").change(function() {
+        $.post("/pt/audio/set?playback_vol="+speaker_volume.slider('getValue')+"&capture_vol="+mic_volume.slider('getValue'),function(data,status){});
+    });
+
+    $("#mic_volume").change(function() {
+        $.post("/pt/audio/set?playback_vol="+speaker_volume.slider('getValue')+"&capture_vol="+mic_volume.slider('getValue'),function(data,status){});
+    });
+
+    $("#audio").click(function() {
+       if($("#audio").prop("checked")) {
+          $.post("/pt/audio/on",function(data,status){
+            alert("Audio Test is Finished.");
+          });
+       } else {
+          $.post("/pt/audio/off",function(data,status){});
+       }
+    });
+
+
+    $("#sd").click(function() {
+       if($("#sd").prop("checked")) {
+          $.post("/pt/sd/on",function(data,status){});
+       } else {
+          $.post("/pt/sd/off",function(data,status){});
+       }
+    });
+
+    $("#sd-loop").click(function() {
+       if($("#sd-loop").prop("checked")) {
+          $.post("/pt/sd/loop/on",function(data,status){});
+       } else {
+          $.post("/pt/sd/loop/off",function(data,status){});
+       }
+    });
+
+    $("#zoom-bar").change(function() {
+        $.post("/pt/zoom/pos?zoom_pos="+zoombar.slider('getValue'),function(data,status){
+          $("#focus-bar").slider("setValue", data.focus_pos);
+        });
+    });
+    
+    $("#focus-bar").change(function() {
+        $.post("/pt/focus/pos?focus_pos="+focusbar.slider('getValue'),function(data,status){
+        });   
+    });
+
+    $("#btn_one_push").click(function() {
+      $.post("/pt/focus/onepush",function(data,status){
+        $("#focus-bar").slider("setValue", data.focus_pos);
+      });
+    });
+
+    $('#focus_f').on('click', function(event) {
+      $.post("/pt/focus/forward",function(data,status){});
+    });
+
+    $('#focus_b').on('click', function(event) {
+      $.post("/pt/focus/backward",function(data,status){});
+    });
+
+    $('#zoom_f').on('click', function(event) {
+      $.post("/pt/zoom/forward",function(data,status){});
+    });
+
+    $('#zoom_b').on('click', function(event) {
+      $.post("/pt/zoom/backward",function(data,status){});
+    });
+    $("input[name='zoom-control']").TouchSpin({
+        postfix: "Forward >>",
+        postfix_extraclass: "zoom_f btn btn-primary",
+        prefix: "<< Backward",
+        prefix_extraclass: "zoom_b btn btn-primary",
+         initval: 10,
+         max:200
+    });
+
+    $("input[name='focus-control']").TouchSpin({
+        postfix: "Forward >>",
+        postfix_extraclass: "focus_f btn btn-primary",
+        prefix: "<< Backward",
+        prefix_extraclass: "focus_b btn btn-primary",
+        initval: 10,
+        max:200
+    });
+
+    $(".zoom_f").on('click', function(event) {
+      $.post("/pt/zoom/forward?steps="+$("input[name='zoom-control']").val(),function(data,status){});
+    });
+
+    $(".zoom_b").on('click', function(event) {
+      $.post("/pt/zoom/backward?steps="+$("input[name='zoom-control']").val(),function(data,status){});
+    });
+
+    $(".focus_f").on('click', function(event) {
+      $.post("/pt/focus/forward?steps="+$("input[name='focus-control']").val(),function(data,status){});
+    });
+
+    $(".focus_b").on('click', function(event) {
+      $.post("/pt/focus/backward?steps="+$("input[name='focus-control']").val(),function(data,status){});
+    });
+
+    $("#btn_reboot").click(function() {
+      $.post("/pt/cmd/reboot",function(data,status){});
+    });
+
+    $("#btn_setrtc").click(function() {
+        var post_str="";
+        post_str+="year="+$("input[name='rtc_year']").val();
+        post_str+="&month="+$("input[name='rtc_month']").val();
+        post_str+="&day="+$("input[name='rtc_day']").val();
+        post_str+="&hour="+$("input[name='rtc_hour']").val();
+        post_str+="&min="+$("input[name='rtc_min']").val();
+        post_str+="&sec="+$("input[name='rtc_sec']").val();
+        $.post("/pt/rtc/set?"+post_str,function(data,status){});
+    });
+
+    $('#btn_change_mac').click(function() {
+      var mac=$("input[name='mac_address']").val();
+          $.post("/pt/info/set?mac="+mac,function(data,status){
+            alert(data.error_desc);
+          });
+    });
+    $('#btn_change_iv_key').click(function() {
+      var iv_key=$("input[name='iv_key']").val();
+          $.post("/pt/info/set?iv_key="+iv_key,function(data,status){
+            alert(data.error_desc);
+          });
+    });
+    $('#btn_change_fr_key').click(function() {
+      var fr_key=$("input[name='fr_key']").val();
+          $.post("/pt/info/set?fr_key="+fr_key,function(data,status){
+            alert(data.error_desc);
+          });
+    });
+
+    $('#btn_change_lpr_key').click(function() {
+      var lpr_key=$("input[name='lpr_key']").val();
+          $.post("/pt/info/set?lpr_key="+lpr_key,function(data,status){
+            alert(data.error_desc);
+          });
+    });
+
+    $('#btn_change_hw_id').click(function() {
+      var hw_id=$("input[name='hw_id']").val();
+          $.post("/pt/info/set?hw_id="+hw_id,function(data,status){
+            alert(data.error_desc);
+          });
+    });
+
+    $('#btn_chg_boot').click(function() {
+          $.post("/pt/boot/set?rootfs=ship",function(data,status){
+            alert(data.error_desc);
+          });
+    });
+
+    $('#btn_factory_reset').click(function() {
+          $.post("/pt/cmd/reset",function(data,status){
+            alert(data.error_desc);
+            location.reload();
+          });
+    });
+
+    $("input[name='net_type']").change(function() {
+      var type=$('input[name=net_type]:checked').val();
+      if(type=="dhcp"){
+        $("#set_ip_info").hide();
+      }else{
+        $("#set_ip_info").show();
+      }
+    });
+    $('#btn_setip').click(function() {
+        var ip=$("input[name='ip']").val();
+        var mask=$("input[name='mask']").val();
+        var gateway=$("input[name='gateway']").val();
+        var type=$('input[name=net_type]:checked').val();
+
+        if(type=="dhcp"){
+          ip="0.0.0.0";
+          mask="0.0.0.0";
+          gateway="0.0.0.0";
+        }
+        $.post("/pt/network/set?ip="+ip+"&mask="+mask+"&gateway="+gateway
+        ,function(data,status){
+            alert(data.error_desc);
+        });
+    });
+
+    $('#btn_ftptest').click(function() {
+        var ftp_ip=$("input[name='ftp_ip']").val();
+        var snap_interval=$("input[name='sanp_interval']").val();
+        var snap_boot = 0;
+        var error=0;
+
+        if($("#dn_mode").prop("checked")) {
+          if(snap_interval <= 0){
+            alert("Please input Snapshot Interval.");
+            error =1;
+          }
+        }else{
+          snap_interval = 0;
+        }
+
+        if($("#snapshot_boot").prop("checked")) {
+          snap_boot = 1;
+        } else {
+          snap_boot = 0;
+        }
+        if(error == 0){
+          $.post("/pt/ftp/test?ftp_ip="+ftp_ip+"&snap_interval="+snap_interval+"&snap_boot="+snap_boot
+          ,function(data,status){
+              alert(data.error_desc);
+          });
+        }
+    });
+
+    $('#btn_setsnap').click(function() {
+        var ftp_ip=$("input[name='ftp_ip']").val();
+        var snap_interval=$("input[name='sanp_interval']").val();
+        var snap_boot = 0;
+        var error=0;
+
+        if($("#dn_mode").prop("checked")) {
+          if(snap_interval <= 0){
+            alert("Please input Snapshot Interval.");
+            error =1;
+          }
+        }else{
+          snap_interval = 0;
+        }
+
+        if($("#snapshot_boot").prop("checked")) {
+          snap_boot = 1;
+        } else {
+          snap_boot = 0;
+        }
+        if(error == 0){
+          $.post("/pt/ftp/snapshot/set?ftp_ip="+ftp_ip+"&snap_interval="+snap_interval+"&snap_boot="+snap_boot
+          ,function(data,status){
+              alert(data.error_desc);
+          });
+        }
+    });
+
+
+  }); // End of   $( document ).ready
+</script>
+
+</body>
+</html>
