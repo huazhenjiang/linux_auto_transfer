@@ -13,9 +13,14 @@ Note:
 modified
 civetweb.c:
 
+#include "civetweb.h"
+#define STRING_WEB
+#if defined(STRING_WEB)
 #include "stringweb.h"
+#endif
 
-output_body(struct mg_connection *conn, char *body_str, unsigned long size){
+#if defined(STRING_WEB)
+void output_body(struct mg_connection *conn, char *body_str, unsigned long size){
 
 		unsigned long x=0;
 		unsigned char ten,one,sum;
@@ -41,8 +46,8 @@ output_body(struct mg_connection *conn, char *body_str, unsigned long size){
 				x=x+2;
 			}			
 		}	
-
 }
+#endif
 
 handle_static_file_request{
 
@@ -50,62 +55,56 @@ handle_static_file_request{
 	...
 	...
 		{
-#if 0
-			/* Send file directly */
-			//send_file_data(conn, filep, r1, cl);
-#else			
-			//hua
-			//int a=0;
+#if defined(STRING_WEB)
 			unsigned long length;
 			char *ptr;
 			
-			//printf("\r\nGET path:%s",path);
-			if( ptr=strstr(path,"/css") ){		
-				if(ptr=strstr(path,"/bootstrap.min.css")){
+			if( (ptr=strstr(path,"/css")) ){		
+				if( (ptr=strstr(path,"/bootstrap.min.css")) ){
 					if(bootstrap_min_css[0] != '\0'){	
 						length = strlen(bootstrap_min_css);
 						output_body(conn, bootstrap_min_css, length);
 					}					
 				}
-				else if(ptr=strstr(path,"/switch.css")){
+				else if( (ptr=strstr(path,"/switch.css")) ){
 					if(switch_css[0] != '\0'){	
 						length = strlen(switch_css);
 						output_body(conn, switch_css, length);
 					}											
 				}
-				else if(ptr=strstr(path,"/bootstrap-slider.min.css")){
+				else if( (ptr=strstr(path,"/bootstrap-slider.min.css")) ){
 					if(bootstrap_slider_min_css[0] != '\0'){	
 						length = strlen(bootstrap_slider_min_css);
 						output_body(conn, bootstrap_slider_min_css, length);
 					}															
 				}
-				else if(ptr=strstr(path,"/jquery.bootstrap-touchspin.css")){	
+				else if( (ptr=strstr(path,"/jquery.bootstrap-touchspin.css")) ){	
 					if(jquery_bootstrap_touchspin_css[0] != '\0'){	
 						length = strlen(jquery_bootstrap_touchspin_css);
 						output_body(conn, jquery_bootstrap_touchspin_css, length);
 					}								
 				}				
 			}
-			else if(ptr=strstr(path,"/js")){	
-				if(ptr=strstr(path,"/jquery.min.js")){
+			else if( (ptr=strstr(path,"/js")) ){	
+				if( (ptr=strstr(path,"/jquery.min.js")) ){
 					if(jquery_min_js[0] != '\0'){	
 						length = strlen(jquery_min_js);
 						output_body(conn, jquery_min_js, length);
 					}								
 				}
-				else if(ptr=strstr(path,"/bootstrap.min.js")){
+				else if( (ptr=strstr(path,"/bootstrap.min.js")) ){
 					if(bootstrap_min_js[0] != '\0'){	
 						length = strlen(bootstrap_min_js);
 						output_body(conn, bootstrap_min_js, length);
 					}								
 				}
-				else if(ptr=strstr(path,"/bootstrap-slider.min.js")){
+				else if( (ptr=strstr(path,"/bootstrap-slider.min.js")) ){
 					if(bootstrap_slider_min_js[0] != '\0'){	
 						length = strlen(bootstrap_slider_min_js);
 						output_body(conn, bootstrap_slider_min_js, length);
 					}									
 				}
-				else if(ptr=strstr(path,"/jquery.bootstrap-touchspin.js")){
+				else if( (ptr=strstr(path,"/jquery.bootstrap-touchspin.js")) ){
 					if(jquery_bootstrap_touchspin_js[0] != '\0'){	
 						length = strlen(jquery_bootstrap_touchspin_js);
 						output_body(conn, jquery_bootstrap_touchspin_js, length);
@@ -119,7 +118,7 @@ handle_static_file_request{
 					output_body(conn, index_html, length);
 				}				
 			}
+#else			
+			/* Send file directly */
+			send_file_data(conn, filep, r1, cl);
 #endif
-		}
-	}
-}
