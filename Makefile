@@ -15,9 +15,9 @@ export PROJ_ROOT INC LIB CFLAGS BUILD_DIR FINAL_TARGET
 objects := $(patsubst %.c, %.o,$(wildcard *.c))
 #objects := $(patsubst $(SOURCE_C)/%.c, $(SOURCE_C)/%.o,$(wildcard $(SOURCE_C)/*.c))
 
-HTML_folder = $(PROJ_ROOT)/output/html
-CSS_folder = $(PROJ_ROOT)/output/css
-JS_folder = $(PROJ_ROOT)/output/js
+HTML_folder = $(PROJ_ROOT)/html
+CSS_folder = $(PROJ_ROOT)/css
+JS_folder = $(PROJ_ROOT)/js
 
 target_html := $(wildcard $(HTML_folder)/*.html)
 target_css := $(wildcard $(CSS_folder)/*.css)
@@ -55,8 +55,11 @@ $(FINAL_TARGET): init $(objects)
 	cc $(CFLAGS) $(INC) -o $(FINAL_TARGET) $(objects)
 init:
 	mkdir -p $(BUILD_DIR)
+	mkdir -p $(HTML_folder)
+	mkdir -p $(CSS_folder)
+	mkdir -p $(JS_folder)
 
 
 .PHONY: clean
 clean:
-	rm -rf src/*.o $(BUILD_DIR)/ 
+	rm -rf *.o $(BUILD_DIR)/ 

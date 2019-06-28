@@ -1,0 +1,125 @@
+If you want to replace the html, css and js file in root document file on civetweb. 
+This program would transfer file (*.html, *.css, *.js) to a corresponding ASCII char array with *.c file,
+and also collect all *.c file into stringweb.h. 
+
+
+How to use?
+1. put your *.html into html folder(same with .css and .js)
+2. make
+3. the 'output' folder contain all files (including *.c and stringweb.h)
+4. paste the *.c and stringweb.h into civetweb folder, meanwhile it need to modify makefile to compile them
+
+Note:
+modified
+civetweb.c:
+
+#include "stringweb.h"
+
+output_body(struct mg_connection *conn, char *body_str, unsigned long size){
+
+		unsigned long x=0;
+		unsigned char ten,one,sum;
+		if(size > 0){
+			while(x<size){
+				if((body_str[x] >= 0x30)&&(body_str[x] <= 0x39)){
+					ten =body_str[x]-'0';
+				}
+				else{
+					ten =body_str[x]-'a'+10;
+				}
+
+				if((body_str[x+1] >= 0x30)&&(body_str[x+1] <= 0x39)){
+					one =body_str[x+1]-'0';
+				}
+				else{
+					one =body_str[x+1]-'a'+10;
+				}			
+
+				sum = ten*16 + one;
+				mg_write(conn, &sum, 1);
+
+				x=x+2;
+			}			
+		}	
+
+}
+
+handle_static_file_request{
+
+	...
+	...
+	...
+		{
+#if 0
+			/* Send file directly */
+			//send_file_data(conn, filep, r1, cl);
+#else			
+			//hua
+			//int a=0;
+			unsigned long length;
+			char *ptr;
+			
+			//printf("\r\nGET path:%s",path);
+			if( ptr=strstr(path,"/css") ){		
+				if(ptr=strstr(path,"/bootstrap.min.css")){
+					if(bootstrap_min_css[0] != '\0'){	
+						length = strlen(bootstrap_min_css);
+						output_body(conn, bootstrap_min_css, length);
+					}					
+				}
+				else if(ptr=strstr(path,"/switch.css")){
+					if(switch_css[0] != '\0'){	
+						length = strlen(switch_css);
+						output_body(conn, switch_css, length);
+					}											
+				}
+				else if(ptr=strstr(path,"/bootstrap-slider.min.css")){
+					if(bootstrap_slider_min_css[0] != '\0'){	
+						length = strlen(bootstrap_slider_min_css);
+						output_body(conn, bootstrap_slider_min_css, length);
+					}															
+				}
+				else if(ptr=strstr(path,"/jquery.bootstrap-touchspin.css")){	
+					if(jquery_bootstrap_touchspin_css[0] != '\0'){	
+						length = strlen(jquery_bootstrap_touchspin_css);
+						output_body(conn, jquery_bootstrap_touchspin_css, length);
+					}								
+				}				
+			}
+			else if(ptr=strstr(path,"/js")){	
+				if(ptr=strstr(path,"/jquery.min.js")){
+					if(jquery_min_js[0] != '\0'){	
+						length = strlen(jquery_min_js);
+						output_body(conn, jquery_min_js, length);
+					}								
+				}
+				else if(ptr=strstr(path,"/bootstrap.min.js")){
+					if(bootstrap_min_js[0] != '\0'){	
+						length = strlen(bootstrap_min_js);
+						output_body(conn, bootstrap_min_js, length);
+					}								
+				}
+				else if(ptr=strstr(path,"/bootstrap-slider.min.js")){
+					if(bootstrap_slider_min_js[0] != '\0'){	
+						length = strlen(bootstrap_slider_min_js);
+						output_body(conn, bootstrap_slider_min_js, length);
+					}									
+				}
+				else if(ptr=strstr(path,"/jquery.bootstrap-touchspin.js")){
+					if(jquery_bootstrap_touchspin_js[0] != '\0'){	
+						length = strlen(jquery_bootstrap_touchspin_js);
+						output_body(conn, jquery_bootstrap_touchspin_js, length);
+					}														
+				}
+			}
+			else{
+				//index		
+				if(index_html[0] != '\0'){	
+					length = strlen(index_html);
+					output_body(conn, index_html, length);
+				}				
+			}
+#endif
+		}
+	}
+}

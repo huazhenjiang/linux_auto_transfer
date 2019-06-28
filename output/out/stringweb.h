@@ -1,9 +1,0 @@
-extern char *bootstrap_min_js;
-extern char *bootstrap_slider_min_css;
-extern char *bootstrap_min_css;
-extern char *jquery_min_js;
-extern char *jquery_bootstrap_touchspin_js;
-extern char *index_html;
-extern char *switch_css;
-extern char *jquery_bootstrap_touchspin_css;
-extern char *bootstrap_slider_min_js;
