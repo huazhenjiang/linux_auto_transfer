@@ -10,15 +10,16 @@ How to use?
 4. paste the *.c and stringweb.h into civetweb folder, meanwhile it need to modify makefile to compile them
 
 Note:
-modified
-civetweb.c:
+modify the following in civetweb.c:
 
+1.
 #include "civetweb.h"
 #define STRING_WEB
 #if defined(STRING_WEB)
 #include "stringweb.h"
 #endif
 
+2.
 #if defined(STRING_WEB)
 void output_body(struct mg_connection *conn, char *body_str, unsigned long size){
 
@@ -53,7 +54,26 @@ handle_static_file_request{
 
 	...
 	...
+#if !defined(STRING_WEB)	
+	if (!mg_fopen(conn, path, MG_FOPEN_MODE_READ, filep)) {
+		mg_send_http_error(conn,
+		                   500,
+		                   "Error: Cannot open file\nfopen(%s): %s",
+		                   path,
+		                   strerror(ERRNO));
+		return;
+	}
+	fclose_on_exec(&filep->access, conn);
+#endif
 	...
+	...
+	if (!is_head_request) {
+#if defined(USE_ZLIB)
+		if (allow_on_the_fly_compression) {
+			/* Compress and send */
+			send_compressed_data(conn, filep);
+		} else
+#endif
 		{
 #if defined(STRING_WEB)
 			unsigned long length;
@@ -112,13 +132,52 @@ handle_static_file_request{
 				}
 			}
 			else{
-				//index		
-				if(index_html[0] != '\0'){	
-					length = strlen(index_html);
-					output_body(conn, index_html, length);
+				if( (ptr=strstr(path,"/file_upload.html")) ){
+					if(file_upload_html[0] != '\0'){	
+						length = strlen(file_upload_html);
+						output_body(conn, file_upload_html, length);
+					}
 				}				
+				else if( (ptr=strstr(path,"/blank.html")) ){
+					if(blank_html[0] != '\0'){	
+						length = strlen(blank_html);
+						output_body(conn, blank_html, length);
+					}
+				}
+				else{
+					if(index_html[0] != '\0'){	
+						length = strlen(index_html);
+						output_body(conn, index_html, length);
+					}					
+				}		
 			}
 #else			
 			/* Send file directly */
 			send_file_data(conn, filep, r1, cl);
-#endif
+#endif			
+		}
+	}
+#if !defined(STRING_WEB)	
+	(void)mg_fclose(&filep->access); /* ignore error on read only file */
+#endif	
+
+3.
+		/* 5.2.2. No callback is responsible for this request. The URI
+		 * addresses a file based resource (static content or Lua/cgi
+		 * scripts in the file system). */
+		is_callback_resource = 0;
+		interpret_uri(conn,
+		              path,
+		              sizeof(path),
+		              &file.stat,
+		              &is_found,
+		              &is_script_resource,
+		              &is_websocket_request,
+		              &is_put_or_delete_request);
+#if defined(STRING_WEB)		
+		is_found =1;
+		file.stat.is_directory =0;
+#endif	
+
+
+
